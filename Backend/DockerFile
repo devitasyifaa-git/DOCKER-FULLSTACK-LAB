@@ -1,1 +1,12 @@
+FROM python:3.11-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    DATA_FILE=/var/lib/backend_data/message.json
+
+WORKDIR /app
+COPY app.py /app/app.py
+RUN mkdir -p /var/lib/backend_data && chown -R nobody:nogroup /var/lib/backend_data /app
+USER nobody
+EXPOSE 5000
+CMD ["python", "/app/app.py"]
